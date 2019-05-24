@@ -86,12 +86,42 @@ class ClusteringWorkflow(object):
     def interpret_clusters(self):
         print(self._data_matrix.obs)
 
-if __name__ == '__main__':
+# ------------------------------
+# convenience top-level functions
+def filtered_clustering(workflow_obj):
     data = (
-        ClusteringWorkflow.from_matrix_h5('resources/data/matrix.h5')
-                          .preprocess_by_10x_method()
-                          .compute_neighborhood_graph()
-                          .cluster_by_leiden()
+        workflow_obj.preprocess_by_10x_method()
+                    .compute_neighborhood_graph()
+                    .cluster_by_leiden()
     )
 
     data.interpret_clusters()
+
+def unfiltered_clustering(workflow_obj):
+    data = (
+        workflow_obj.normalize_expression()
+                    .logarithmize()
+                    .compute_neighborhood_graph()
+                    .cluster_by_leiden()
+    )
+
+    data.interpret_clusters()
+
+
+if __name__ == '__main__':
+    print('Reading data from HDF5')
+    workflow_h5  = ClusteringWorkflow.from_matrix_h5( 'resources/data/matrix.h5')
+
+    print('Reading data from MTX')
+    workflow_mtx = ClusteringWorkflow.from_matrix_mtx('resources/data/raw-feature-bc-matrix')
+
+
+    # h5 processing
+    print('Clustering data read from HDF5')
+    filtered_clustering(  workflow_h5)
+    unfiltered_clustering(workflow_h5)
+
+    # mtx processing
+    print('Clustering data read from mtx')
+    filtered_clustering(  workflow_mtx)
+    unfiltered_clustering(workflow_mtx)
