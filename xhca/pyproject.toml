@@ -8,6 +8,7 @@ authors = ["Aldrin <DrinMontana@acm.org>"]
 python = "^3.7"
 popper = "^2.1"
 scanpy = "^1.4"
+leidenalg = "^0.7.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
