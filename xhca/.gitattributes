@@ -2,3 +2,4 @@ resources/data/matrix.h5 filter=lfs diff=lfs merge=lfs -text
 resources/data/raw-feature-bc-matrix/barcodes.tsv.gz filter=lfs diff=lfs merge=lfs -text
 resources/data/raw-feature-bc-matrix/features.tsv.gz filter=lfs diff=lfs merge=lfs -text
 resources/data/raw-feature-bc-matrix/matrix.mtx.gz filter=lfs diff=lfs merge=lfs -text
+resources/data/droplet_annotation.csv filter=lfs diff=lfs merge=lfs -text
