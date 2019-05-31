@@ -1,0 +1,40 @@
+anndata/h5py/h5sparse.py    File
+anndata/h5py/h5sparse.py    Group
+anndata/h5py/h5sparse.py    SparseDataset
+                attrs.py    AttributeManager
+                 base.py    CommonStateObject
+                 base.py    Empty
+                 base.py    HLObject
+                 base.py    ItemsViewHDF5
+                 base.py    KeysViewHDF5
+                 base.py    MappingHDF5
+                 base.py    MutableMappingHDF5
+                 base.py    ValuesViewHDF5
+                 base.py    _RegionProxy
+                 base.py    default_lapl
+                 base.py    default_lcpl
+               compat.py    _fscodec
+              dataset.py    AstypeContext
+              dataset.py    Dataset
+             datatype.py    Datatype
+                files.py    <genexpr>
+                files.py    File
+              filters.py    _gen_filter_tuples
+                group.py    ExternalLink
+                group.py    Group
+                group.py    HardLink
+                group.py    SoftLink
+           selections.py    FancySelection
+           selections.py    PointSelection
+           selections.py    Selection
+           selections.py    SimpleSelection
+           selections.py    _RegionProxy
+          selections2.py    ScalarReadSelection
+                  vds.py    VDSmap
+                  vds.py    VirtualLayout
+                  vds.py    VirtualSource
+        h5py_warnings.py    H5pyDeprecationWarning
+        h5py_warnings.py    H5pyWarning
+        h5py_warnings.py    ModuleWrapper
+        h5py_warnings.py    ModuleWrapper.__init__
+

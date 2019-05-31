@@ -1,0 +1,13 @@
+anndata/h5py/h5sparse.py
+attrs.py
+base.py
+compat.py
+dataset.py
+datatype.py
+files.py
+filters.py
+group.py
+selections.py
+selections2.py
+vds.py
+h5py_warnings.py
