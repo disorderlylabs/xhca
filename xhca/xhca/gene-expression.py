@@ -86,42 +86,38 @@ class ClusteringWorkflow(object):
     def interpret_clusters(self):
         print(self._data_matrix.obs)
 
-# ------------------------------
-# convenience top-level functions
-def filtered_clustering(workflow_obj):
-    data = (
-        workflow_obj.preprocess_by_10x_method()
-                    .compute_neighborhood_graph()
-                    .cluster_by_leiden()
-    )
+    def filtered_clustering(self):
+        (
+            self.preprocess_by_10x_method()
+                .compute_neighborhood_graph()
+                .cluster_by_leiden()
+                .interpret_clusters()
+        )
 
-    data.interpret_clusters()
-
-def unfiltered_clustering(workflow_obj):
-    data = (
-        workflow_obj.normalize_expression()
-                    .logarithmize()
-                    .compute_neighborhood_graph()
-                    .cluster_by_leiden()
-    )
-
-    data.interpret_clusters()
-
+    def unfiltered_clustering(self):
+        (
+            self.normalize_expression()
+                .logarithmize()
+                .compute_neighborhood_graph()
+                .cluster_by_leiden()
+                .interpret_clusters()
+        )
 
 if __name__ == '__main__':
-    print('Reading data from HDF5')
-    workflow_h5  = ClusteringWorkflow.from_matrix_h5( 'resources/data/matrix.h5')
+    workflow_queue = (
+        ('resources/data/10k-pbmc.h5'          , 'hdf5'),
+        ('resources/data/ica-cord-blood.h5'    , 'hdf5'),
+        ('resources/data/ica-bone-marrow.h5'   , 'hdf5'),
+        ('resources/data/raw-feature-bc-matrix',  'mtx'),
+    )
 
-    print('Reading data from MTX')
-    workflow_mtx = ClusteringWorkflow.from_matrix_mtx('resources/data/raw-feature-bc-matrix')
+    for resource_path, resource_type in workflow_queue:
+        if resource_type == 'hdf5':
+            print('Running workflow on HDF5')
+            fn_workflow_builder = ClusteringWorkflow.from_matrix_h5
 
+        elif resource_type == 'mtx':
+            print('Running workflow on MTX')
+            fn_workflow_builder = ClusteringWorkflow.from_matrix_mtx
 
-    # h5 processing
-    print('Clustering data read from HDF5')
-    filtered_clustering(  workflow_h5)
-    unfiltered_clustering(workflow_h5)
-
-    # mtx processing
-    print('Clustering data read from mtx')
-    filtered_clustering(  workflow_mtx)
-    unfiltered_clustering(workflow_mtx)
+        fn_workflow_builder(resource_path).filtered_clustering()
