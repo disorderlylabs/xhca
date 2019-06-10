@@ -35,6 +35,10 @@ class ClusteringWorkflow(object):
 
         return cls(anndata_matrix)
 
+    @classmethod
+    def from_workflow(cls, workflow_obj):
+        return cls(workflow_obj._data_matrix.copy())
+
     def __init__(self, data_matrix, **kwargs):
         super().__init__(**kwargs)
 
@@ -86,12 +90,17 @@ class ClusteringWorkflow(object):
     def interpret_clusters(self):
         print(self._data_matrix.obs)
 
-    def filtered_clustering(self):
+    def filtered_clustering(self, copy=False):
+        if copy:
+            workflow_obj = ClusteringWorkflow.from_workflow(self)
+
+        else:
+            workflow_obj = self
+
         (
-            self.preprocess_by_10x_method()
-                .compute_neighborhood_graph()
-                .cluster_by_leiden()
-                .interpret_clusters()
+            workflow_obj.preprocess_by_10x_method()
+                        .compute_neighborhood_graph()
+                        .cluster_by_leiden()
         )
 
     def unfiltered_clustering(self):
@@ -100,7 +109,6 @@ class ClusteringWorkflow(object):
                 .logarithmize()
                 .compute_neighborhood_graph()
                 .cluster_by_leiden()
-                .interpret_clusters()
         )
 
 if __name__ == '__main__':
