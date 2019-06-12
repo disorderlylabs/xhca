@@ -111,7 +111,7 @@ class ClusteringWorkflow(object):
                 .cluster_by_leiden()
         )
 
-if __name__ == '__main__':
+def run_all_tests():
     workflow_queue = (
         ('resources/data/10k-pbmc.h5'          , 'hdf5'),
         ('resources/data/ica-cord-blood.h5'    , 'hdf5'),
@@ -129,3 +129,12 @@ if __name__ == '__main__':
             fn_workflow_builder = ClusteringWorkflow.from_matrix_mtx
 
         fn_workflow_builder(resource_path).filtered_clustering()
+
+def single_large_test():
+    (
+        ClusteringWorkflow.from_matrix_h5('resources/data/ica-cord-blood.h5')
+                          .filtered_clustering()
+    )
+
+if __name__ == '__main__':
+    single_large_test()

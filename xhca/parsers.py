@@ -37,3 +37,13 @@ class GeneSetParser(object):
             data=mapped_vals,
             index=gene_symbols
         )
+
+class H5PerfParser(object):
+    marker_end_of_param = '==== End of Parameters ===='
+
+    @classmethod
+    def from_perf_profile(cls, perf_profile_path):
+        with open(perf_profile_path) as perf_handle:
+            for param_line in perf_handle:
+                # advance file handle until the interesting data
+                if cls.marker_end_of_param in param_line: break
