@@ -11,6 +11,7 @@ scanpy = "^1.4"
 leidenalg = "^0.7.0"
 pytest-benchmark = "^3.2"
 numpy = "^1.16"
+docopt = "^0.6.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
