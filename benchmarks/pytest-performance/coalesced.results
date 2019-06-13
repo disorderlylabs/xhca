@@ -1,0 +1,8 @@
+Test Type         , Name (time in s)                                  , Min    , Max    , Mean   , StdDev, Median , IQR   , Outliers,         , OPS (1/Mean), Rounds
+                  ,                                                   ,        ,        ,        ,       ,        ,       , 1 StdDev, 1.5 IQR ,             , 
+read with cache   , test_performance_10kpbmc_h5_read                  , 6.5462 , 6.6068 , 6.5796 , 0.0252, 6.5781 , 0.0421, 2       , 0       , 0.1520      , 5
+read with cache   , test_performance_10kpbmc_mtx_read                 , 61.7516, 62.4532, 62.0233, 0.2635, 61.9904, 0.2825, 2       , 0       , 0.0161      , 5
+read with no cache, test_performance_10kpbmc_h5_read                  , 6.7735 , 10.3106, 7.6096 , 1.5144, 7.0159 , 1.0277, 1       , 1       , 0.1314      , 5
+read with no cache, test_performance_10kpbmc_mtx_read                 , 62.5220, 65.1050, 63.3845, 1.1128, 62.8399, 1.6539, 1       , 0       , 0.0158      , 5
+read with no cache, test_performance_matrix_construction_cordblood_h5 , 8.5236 , 8.8775 , 8.7137 , 0.1784, 8.7400 , 0.2655, 1       , 0       , 0.1148      , 3
+read with no cache, test_performance_matrix_construction_bonemarrow_h5, 9.8983 , 10.3804, 10.1260, 0.2421, 10.0995, 0.3616, 1       , 0       , 0.0988      , 3

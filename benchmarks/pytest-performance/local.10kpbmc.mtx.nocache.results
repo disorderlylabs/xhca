@@ -1,0 +1,21 @@
+============================= test session starts ==============================
+platform linux -- Python 3.7.3, pytest-3.10.1, py-1.8.0, pluggy-0.12.0
+benchmark: 3.2.2 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /home/drin/code/research/xhca, inifile:
+plugins: benchmark-3.2.2
+collected 2 items
+
+tests/test_performance.py .                                              [ 50%]
+tests/test_xhca.py .                                                     [100%]
+
+
+Computing stats ...Computing stats ... group 1/1Computing stats ... group 1/1: minComputing stats ... group 1/1: min (1/1)Computing stats ... group 1/1: min (1/1)Computing stats ... group 1/1: maxComputing stats ... group 1/1: max (1/1)Computing stats ... group 1/1: max (1/1)Computing stats ... group 1/1: meanComputing stats ... group 1/1: mean (1/1)Computing stats ... group 1/1: mean (1/1)Computing stats ... group 1/1: medianComputing stats ... group 1/1: median (1/1)Computing stats ... group 1/1: median (1/1)Computing stats ... group 1/1: iqrComputing stats ... group 1/1: iqr (1/1)Computing stats ... group 1/1: iqr (1/1)Computing stats ... group 1/1: stddevComputing stats ... group 1/1: stddev (1/1)Computing stats ... group 1/1: stddev (1/1)Computing stats ... group 1/1: opsComputing stats ... group 1/1: ops (1/1)Computing stats ... group 1/1: ops (1/1)Computing stats ... group 1/1: ops: outliersComputing stats ... group 1/1: ops: outliers (1/1)Computing stats ... group 1/1: ops: roundsComputing stats ... group 1/1: ops: rounds (1/1)Computing stats ... group 1/1: ops: iterationsComputing stats ... group 1/1: ops: iterations (1/1)----------------------------------------------------- benchmark: 1 tests -----------------------------------------------------
+Name (time in s)                          Min      Max     Mean  StdDev   Median     IQR  Outliers     OPS  Rounds  Iterations
+------------------------------------------------------------------------------------------------------------------------------
+test_performance_10kpbmc_mtx_read     62.5220  65.1050  63.3845  1.1128  62.8399  1.6539       1;0  0.0158       5           1
+------------------------------------------------------------------------------------------------------------------------------
+
+Legend:
+  Outliers: 1 Standard Deviation from Mean; 1.5 IQR (InterQuartile Range) from 1st Quartile and 3rd Quartile.
+  OPS: Operations Per Second, computed as 1 / Mean
+========================== 2 passed in 318.77 seconds ==========================
