@@ -35,30 +35,38 @@ def cluster_gene_expression(anndata_matrix):
     scanpy.tl.leiden(anndata_matrix)
 
 def benchmark_h5_matrix_construction(benchmark, resource_path):
-    benchmark.pedantic(matrix_from_h5, args=(resource_path,), rounds=15)
+    benchmark.pedantic(matrix_from_h5, args=(resource_path,), rounds=1)
 
 def benchmark_mtx_matrix_construction(benchmark, resource_path):
-    benchmark.pedantic(matrix_from_mtx, args=(resource_path,), rounds=15)
+    benchmark.pedantic(matrix_from_mtx, args=(resource_path,), rounds=1)
 
 def benchmark_clustering(benchmark, anndata_matrix):
-    benchmark.pedantic(cluster_gene_expression, args=(anndata_matrix,), rounds=15)
+    benchmark.pedantic(cluster_gene_expression, args=(anndata_matrix,), rounds=1)
 
-def test_performance_matrix_construction(benchmark):
+def test_performance_matrix_construction_10kpbmc_h5(benchmark):
     benchmark_h5_matrix_construction(benchmark, resources.get('10kpbmc-h5'))
+
+def test_performance_matrix_construction_10kpbmc_mtx(benchmark):
     benchmark_mtx_matrix_construction(benchmark, resources.get('10kpbmc-mtx'))
 
+def test_performance_matrix_construction_cordblood_h5(benchmark):
     benchmark_h5_matrix_construction(benchmark, resources.get('cord-blood'))
+
+def test_performance_matrix_construction_bonemarrow_h5(benchmark):
     benchmark_h5_matrix_construction(benchmark, resources.get('bone-marrow'))
 
-def test_performance_end_to_end(benchmark):
+def test_performance_end_to_end_10kpbmc_h5(benchmark):
     data_matrix = matrix_from_h5(resources.get('10kpbmc-h5'))
     benchmark_clustering(benchmark, data_matrix)
 
+def test_performance_end_to_end_10kpbmc_mtx(benchmark):
     data_matrix = matrix_from_mtx(resources.get('10kpbmc-mtx'))
     benchmark_clustering(benchmark, data_matrix)
 
+def test_performance_end_to_end_cordblood_h5(benchmark):
     data_matrix = matrix_from_h5(resources.get('cord-blood'))
     benchmark_clustering(benchmark, data_matrix)
 
+def test_performance_end_to_end_bonemarrow_h5(benchmark):
     data_matrix = matrix_from_h5(resources.get('bone-marrow'))
     benchmark_clustering(benchmark, data_matrix)
