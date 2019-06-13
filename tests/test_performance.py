@@ -1,3 +1,4 @@
+import subprocess
 import warnings
 import unittest
 
@@ -12,17 +13,31 @@ resources = {
     'bone-marrow': 'resources/data/ica-bone-marrow.h5'   ,
 }
 
+def clear_caches():
+    subprocess.run(['sudo', 'sync'])
+    subprocess.run(['sudo', 'echo', '1', '>', '/proc/sys/vm/drop_caches'])
+    subprocess.run(['sudo', 'sync'])
+    subprocess.run(['sudo', 'echo', '2', '>', '/proc/sys/vm/drop_caches'])
+    subprocess.run(['sudo', 'sync'])
+    subprocess.run(['sudo', 'echo', '3', '>', '/proc/sys/vm/drop_caches'])
+
 def benchmark_hdf5_dataread(benchmark, resource_path):
+    def workflow_no_cache(path_to_matrix):
+        clear_caches()
+        ClusteringWorkflow.from_matrix_h5(path_to_matrix)
+
     with warnings.catch_warnings():
         warnings.simplefilter('ignore')
 
         benchmark.pedantic(
-            ClusteringWorkflow.from_matrix_h5,
+            workflow_no_cache,
             kwargs={ 'path_to_matrix': resource_path },
-            rounds=15
+            rounds=5
         )
 
 def benchmark_hdf5_dataprocessing(benchmark, resource_path):
+    clear_caches()
+
     with warnings.catch_warnings():
         warnings.simplefilter('ignore')
 
@@ -30,17 +45,21 @@ def benchmark_hdf5_dataprocessing(benchmark, resource_path):
         benchmark.pedantic(
             workflow_obj.filtered_clustering,
             kwargs={ 'copy': True },
-            rounds=15
+            rounds=5
         )
 
 def benchmark_mtx_dataread(benchmark, resource_path):
+    def workflow_no_cache(path_to_matrix):
+        clear_caches()
+        ClusteringWorkflow.from_matrix_mtx(path_to_matrix)
+
     with warnings.catch_warnings():
         warnings.simplefilter('ignore')
 
         benchmark.pedantic(
-            ClusteringWorkflow.from_matrix_mtx,
+            workflow_no_cache,
             kwargs={ 'path_to_matrix': resource_path },
-            rounds=15
+            rounds=5
         )
 
 def benchmark_mtx_dataprocessing(benchmark, resource_path):
@@ -51,7 +70,7 @@ def benchmark_mtx_dataprocessing(benchmark, resource_path):
         benchmark.pedantic(
             workflow_obj.filtered_clustering,
             kwargs={ 'copy': True },
-            rounds=15
+            rounds=5
         )
 
 # ------------------------------
@@ -78,7 +97,6 @@ def skip_test_performance_cordblood_h5_read(benchmark):
 
 def skip_test_performance_cordblood_h5_process(benchmark):
     benchmark_hdf5_dataprocessing(benchmark, resources.get('cord-blood'))
-
 
 def skip_test_performance_bonemarrow_h5_read(benchmark):
     benchmark_hdf5_dataread(benchmark, resources.get('bone-marrow'))
