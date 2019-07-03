@@ -70,7 +70,7 @@ def benchmark_clustering(benchmark, anndata_matrix):
 
 # ------------------------------
 # Test Case Functions
-def skip_test_performance_matrix_construction_10kpbmc_h5(benchmark):
+def test_performance_matrix_construction_10kpbmc_h5(benchmark):
     benchmark_h5_matrix_construction(benchmark, resources.get('10kpbmc-h5'))
 
 def skip_test_performance_matrix_construction_10kpbmc_mtx(benchmark):
