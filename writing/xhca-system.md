@@ -49,13 +49,42 @@ discussed in [Computation inside of the storage system](#inside-of-the-storage-s
 
 ### Mapping across the divide
 
+From the biological perspective we are interested in loading gene expression matrices, cell
+annotations, and possibly gene annotations. Included in the cell annotations would be cluster
+labels or cell types. The storage system would then need to decide how should the data be stored to
+optimize offline pushdowns or data traversal during data access. This might mean that gene
+expression matrices for cluster representatives are co-located, or gene expression matrices for
+clusters are uniformly sharded, or gene expression matrices are striped across smart drives based
+on content (so that each smart drive has an equal share of actual values). Maybe the storage system
+will want to store materialized views for a "hot" subset of queries, or maybe the storage system
+will want to co-locate cells by cell type. Additionally, the storage system may want to shuffle
+data based on workload patterns.
+
 ## Computation
 
 ### Outside of the storage system
 
+Biological applications may be interested in doing "local" computation over gene expression
+matrices, such as running their own clustering analysis. In these cases, clients may want to update
+annotations for cells or genes.
+
 ### Inside of the storage system
 
+It may be possible for the storage system to improve compute efficiency by running offline
+transformations on the data in the background. Then, when compute needs to happen, such as
+clustering analysis or some other vectorizable computations, the data can be streamed out of the
+storage system in a format that is packed and minimal.
+
 ### Queries
+
+For a prototype system, we are interested in providing a system that can be queried by biologists.
+Queries should be serviced at "interactive" speeds, which means that the storage system should act
+as a "pile" system that takes data dumps, processes them in the background, and then is able to
+serve queries with data in the necessary format. Alternatively, this may mean that the storage
+system should provide initial results or sub-sampled results and stream the results to a user or
+shuffle data to minimize data access latency. This will essentially rely on the tuning knob: should
+we optimize data for access at time of ingest (eager), or should we do optimization at query or data access
+time to make subsequent executions of the query or data access extremely fast (lazy).
 
 ## Storage
 
