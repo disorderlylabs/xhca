@@ -2,8 +2,8 @@
 
 
 
-<figure id="system-architecture-diagram">
-  <img src="../assets/system_architecture.png" />
+<figure>
+  <img id="system-architecture-diagram" src="../assets/system_architecture.png" />
   <figcaption>Figure 1: High level diagram illustrating the purpose of the XHCA project.</figcaption>
 </figure>
 
