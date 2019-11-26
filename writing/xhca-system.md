@@ -72,20 +72,20 @@ similarity metric used is an implementation detail.
 representing the gene expression matrix, cell annotations, and gene annotations in a relational
 model. The key points here are:
 
-    1. Processing of the gene expression matrix will use both the cell and gene dimensions
-       frequently.
-    1. In a de-normalized approach, cell types (clusters) can be represented as a simple string and
-       processing of cell annotations can leveerage the string instead of walking multiple
-       relations.
-    1. Although a good initial approach is unclear, cell type representatives are a single vector
-       and if a cell is similar to that vector then it can be considered of that cell type.
-    1. To query gene expressions across many cells would require filtering and aggregation over
-       many gene expression matrices for a subset of genes.
-    1. Genes may be a part of many "gene sets", or sets of genes that are biologically related in
-       their influence of the organism's phenotype or genotype. In a relational database these
-       would likely be represented as a table of GeneSets which would identify each gene set and
-       metadata, and a table with foreign keys into GeneSets and GeneAnnotations. However, the
-       implementation of such a mechanism in a storage system is not clear.
+1. Processing of the gene expression matrix will use both the cell and gene dimensions
+   frequently.
+1. In a de-normalized approach, cell types (clusters) can be represented as a simple string and
+   processing of cell annotations can leveerage the string instead of walking multiple
+   relations.
+1. Although a good initial approach is unclear, cell type representatives are a single vector
+   and if a cell is similar to that vector then it can be considered of that cell type.
+1. To query gene expressions across many cells would require filtering and aggregation over
+   many gene expression matrices for a subset of genes.
+1. Genes may be a part of many "gene sets", or sets of genes that are biologically related in
+   their influence of the organism's phenotype or genotype. In a relational database these
+   would likely be represented as a table of GeneSets which would identify each gene set and
+   metadata, and a table with foreign keys into GeneSets and GeneAnnotations. However, the
+   implementation of such a mechanism in a storage system is not clear.
 
 ### Storage Data Model
 
