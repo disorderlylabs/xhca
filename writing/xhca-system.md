@@ -48,6 +48,11 @@
 
 ### Biological Data Model
 
+<figure>
+  <img id="erd-sketch" src="../assets/erd_sketch.png" />
+  <figcaption>Figure 2: Sketch of an ERD for gene expression matrices and annotations.</figcaption>
+</figure>
+
 In the biological data model, we have three primary entities: cells, genes, and a gene expression
 matrix. A **cell** corresponds to a biological cell that was sequenced using some single-cell
 RNA sequencing technology. Single-cell sequencing generates some number of RNA sequences, which can
@@ -62,11 +67,6 @@ type is a logical representation of a set of similar cells, or a cluster of cell
 associated with a cluster, or cell type, that cell can be "annotated" with that cluster ID.
 Canonically, cells are compared by comparing the expression of all of their genes, but the exact
 similarity metric used is an implementation detail.
-
-<figure>
-  <img id="erd-sketch" src="../assets/erd_sketch.png" />
-  <figcaption>Figure 2: Sketch of an ERD for gene expression matrices and annotations.</figcaption>
-</figure>
 
 [Figure 2](#erd-sketch), above, shows a rough sketch of an entity-relationship diagram for
 representing the gene expression matrix, cell annotations, and gene annotations in a relational
