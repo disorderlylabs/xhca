@@ -13,18 +13,29 @@
   for certain cell types and, optionally, cell or gene annotations.
 
 - There are thus two "contexts" of analysis: (1) Cells and genes and their annotations and (2)
-  cells and genes using expression data.
+  cells and genes using expression data. For now, the first context will be referred to as
+  a "cellular" context, and the second context will be a "molecular" context.
 
-    - In the first context, the system should be concerned with how to pushdown predicates on
-      annotations and to efficiently retrieve cell and gene information, with little need to
-      process expression data. This is especially true if the minimal processing necessary (e.g.
-      comparing cell type representatives, or cluster centroids, to each other) is done at time of
-      ingest rather than data access time.
+- For the cellular context:
 
-    - In the second context, the system is expected to use distance or similarity functions to
-      compare cells or genes in order to do some of the following: clustering, filtering, QC, or
-      translation (such as normalization or perhaps from raw expression to BP).
+    - Cells are fully independent and there is no constraint on how annotations are processed. This
+      means that all approaches to distribution across smart drives may be considered.
 
+    - The system should be concerned with how to pushdown predicates on annotations and to
+      efficiently retrieve cell and gene information, with little need to process expression data.
+      This is especially true if the minimal processing necessary (e.g.  comparing cell type
+      representatives, or cluster centroids, to each other) is done at time of ingest rather than
+      data access time.
+  
+- For the molecular context:
+
+    - Cells may be independently processed, but aggregate information is needed over cells with the
+      same varying scopes of locality: in the same matrix (from the same sequencing lane?), from
+      the same assay, from the same lab, etc.
+
+    - The system is expected to use distance or similarity functions to compare cells or genes in
+      order to do some of the following: clustering, filtering, QC, or translation (such as
+      normalization or perhaps from raw expression to BP).
 
 <figure>
   <img id="system-architecture-diagram" src="../assets/system_architecture.png" />
