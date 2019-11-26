@@ -63,6 +63,25 @@ associated with a cluster, or cell type, that cell can be "annotated" with that 
 Canonically, cells are compared by comparing the expression of all of their genes, but the exact
 similarity metric used is an implementation detail.
 
+<figure>
+  <img id="erd-sketch" src="../assets/erd_sketch.png" />
+  <figcaption>Figure 2: Sketch of an ERD for gene expression matrices and annotations.</figcaption>
+</figure>
+
+[Figure 2](#erd-sketch), above, shows a rough sketch of an entity-relationship diagram for
+representing the gene expression matrix, cell annotations, and gene annotations in a relational
+model. The key points here are:
+
+    1. Processing of the gene expression matrix will use both the cell and gene dimensions
+       frequently.
+    1. In a de-normalized approach, cell types (clusters) can be represented as a simple string and
+       processing of cell annotations can leveerage the string instead of walking multiple
+       relations.
+    1. Although a good initial approach is unclear, cell type representatives are a single vector
+       and if a cell is similar to that vector then it can be considered of that cell type.
+    1. To query gene expressions across many cells would require filtering and aggregation over
+       many gene expression matrices for a subset of genes.
+
 ### Storage Data Model
 
 A storage system provides a single interface for storing data on storage devices. For the XHCA
