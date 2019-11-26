@@ -37,11 +37,6 @@
       order to do some of the following: clustering, filtering, QC, or translation (such as
       normalization or perhaps from raw expression to BP).
 
-<figure>
-  <img id="system-architecture-diagram" src="../assets/system_architecture.png" />
-  <figcaption>Figure 1: High level diagram illustrating the purpose of the XHCA project.</figcaption>
-</figure>
-
 # Components
 
 ## Data Models
@@ -49,8 +44,8 @@
 ### Biological Data Model
 
 <figure>
-  <img id="erd-sketch" src="../assets/erd_sketch.png" />
-  <figcaption>Figure 2: Sketch of an ERD for gene expression matrices and annotations.</figcaption>
+  <img id="system-architecture-diagram" src="../assets/system_architecture.png" />
+  <figcaption>Figure 1: High level diagram illustrating the purpose of the XHCA project.</figcaption>
 </figure>
 
 In the biological data model, we have three primary entities: cells, genes, and a gene expression
@@ -61,6 +56,11 @@ to it is known as it's expression. Single-cell sequencing is interested in the e
 gene for every cell, which is stored in a gene expression matrix. For simplicity, the XHCA project
 assumes that gene expression matrices represent genes as rows (`r`) and cells as columns (`c`),
 where every position in a matrix is the expression of the gene in the cell (`m[r, c]`).
+
+<figure>
+  <img id="erd-sketch" src="../assets/erd_sketch.png" />
+  <figcaption>Figure 2: Sketch of an ERD for gene expression matrices and annotations.</figcaption>
+</figure>
 
 In addition to the three primary entities, there is a meta-entity of interest: a cell type. A cell
 type is a logical representation of a set of similar cells, or a cluster of cells. Once a cell is
