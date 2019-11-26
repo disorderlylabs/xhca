@@ -1,5 +1,29 @@
 # Overview
 
+## Summary
+
+- The biologists are most interested in cell type analysis, or clusters of cells.
+
+- The biologists are interested in a system that they can provide: (1) cell data (gene expression
+  data) and (2) cluster labels (or, more generally, cell annotations such as cell types).
+
+- The biologists are interested in making two categories of queries: (1) retrieve cell data from
+  the system given a set of cell types and, optionally, annotations to filter on and (2) retrieve
+  genes that are up-regulated (have higher expression) or down-regulated (have lower expression)
+  for certain cell types and, optionally, cell or gene annotations.
+
+- There are thus two "contexts" of analysis: (1) Cells and genes and their annotations and (2)
+  cells and genes using expression data.
+
+    - In the first context, the system should be concerned with how to pushdown predicates on
+      annotations and to efficiently retrieve cell and gene information, with little need to
+      process expression data. This is especially true if the minimal processing necessary (e.g.
+      comparing cell type representatives, or cluster centroids, to each other) is done at time of
+      ingest rather than data access time.
+
+    - In the second context, the system is expected to use distance or similarity functions to
+      compare cells or genes in order to do some of the following: clustering, filtering, QC, or
+      translation (such as normalization or perhaps from raw expression to BP).
 
 
 <figure>
