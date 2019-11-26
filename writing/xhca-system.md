@@ -81,6 +81,11 @@ model. The key points here are:
        and if a cell is similar to that vector then it can be considered of that cell type.
     1. To query gene expressions across many cells would require filtering and aggregation over
        many gene expression matrices for a subset of genes.
+    1. Genes may be a part of many "gene sets", or sets of genes that are biologically related in
+       their influence of the organism's phenotype or genotype. In a relational database these
+       would likely be represented as a table of GeneSets which would identify each gene set and
+       metadata, and a table with foreign keys into GeneSets and GeneAnnotations. However, the
+       implementation of such a mechanism in a storage system is not clear.
 
 ### Storage Data Model
 
