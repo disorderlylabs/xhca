@@ -37,29 +37,93 @@
       order to do some of the following: clustering, filtering, QC, or translation (such as
       normalization or perhaps from raw expression to BP).
 
-# Components
-
-## Data Models
-
-### Biological Data Model
-
 <figure>
   <img id="system-architecture-diagram" src="../assets/system_architecture.png" />
   <figcaption>Figure 1: High level diagram illustrating the purpose of the XHCA project.</figcaption>
 </figure>
 
-In the biological data model, we have three primary entities: cells, genes, and a gene expression
-matrix. A **cell** corresponds to a biological cell that was sequenced using some single-cell
+
+## Open Questions
+
+### Data sources
+
+- Where will data come from and how does that affect ingest into "the system" or the smart drives?
+
+    - Will data come from a normalized, consolidated source such as the HCA Data Portal?
+
+    - Will data come in a variety of formats, such as directly from sequencing labs or from
+      disparate pipelines?
+
+    - In what scenarios will the ingest granularity differ from gene expression (cells, genes,
+      counts)?
+
+- What data formats will "the system" be expected to maintain?
+
+    - Assuming loom or MTX files will continue being used, will the system be expected to produce
+      data in these formats?
+
+    - Will "the system" need to provide data organized by single cell in serialization formats for
+      file systems or just for transfer over the network?
+
+    - Should "the system" maintain durable data in accessible formats or can it maintain durable
+      data opaquely as in a single, giant database?
+
+### Query results
+
+- How should results or outputs be returned and/or stored?
+
+    - Should queries return results directly to a "user"?
+
+    - To what extent should query results be accessible to others?
+
+    - Do we expect to grow existing objects (frequent updates) or add new ones (insert only)?
+
+    - To what extent should intermediate results or query results be cached?
+
+
+# Components
+
+## Data Lifecycle
+
+What is the end-to-end lifecycle for each data object?
+
+### Biological Data
+
+#### Physical Process
+
+A **cell** corresponds to a biological cell that was sequenced using some single-cell
 RNA sequencing technology. Single-cell sequencing generates some number of RNA sequences, which can
 each be mapped to a particular gene. For each gene, the number of RNA sequences that can be mapped
-to it is known as it's expression. Single-cell sequencing is interested in the expression of every
+to it is known as it's expression.
+
+<figure>
+  <img id="erd-sketch" src="../assets/massive-profiling-of-single-cells-Figure1.png" />
+  <figcaption>
+    Figure 2 (Figure 1 of https://doi.org/10.1038/ncomms14049): (a) Workflow of scRNA-seq using 10X
+    Genomics' GemCode technology. (b) A cross-section of the workflow in (a) that shows how gel
+    beads, biological cells, reagents, and oil are collected together into "Single-Cell GEMs" (GEM
+    is **g**el bead in **em**ulsion). (c) Distribution of gel beads per GEM which yields sufficient
+    confidence that transcriptional profiles are on a single cell basis. (d) Biological entities
+    that are contained in each gel bead. (e) Biological entities that are contained in the fully
+    constructed library (final step before sequencing in (a)). (f) Workflow of 10X Genomics's
+    cellranger analysis pipeline.
+  </figcaption>
+</figure>
+
+#### Abstraction and Data Model
+
+There are three high-level entities that "the system" must maintain and process: gene expression,
+cell annotations, and gene annotations.
+
+In the biological data model, we have three primary entities: cells, genes, and a gene expression
+matrix.  Single-cell sequencing is interested in the expression of every
 gene for every cell, which is stored in a gene expression matrix. For simplicity, the XHCA project
 assumes that gene expression matrices represent genes as rows (`r`) and cells as columns (`c`),
 where every position in a matrix is the expression of the gene in the cell (`m[r, c]`).
 
 <figure>
   <img id="erd-sketch" src="../assets/erd_sketch.png" />
-  <figcaption>Figure 2: Sketch of an ERD for gene expression matrices and annotations.</figcaption>
+  <figcaption>Figure 3: Sketch of an ERD for gene expression matrices and annotations.</figcaption>
 </figure>
 
 In addition to the three primary entities, there is a meta-entity of interest: a cell type. A cell
@@ -142,8 +206,8 @@ as a "pile" system that takes data dumps, processes them in the background, and 
 serve queries with data in the necessary format. Alternatively, this may mean that the storage
 system should provide initial results or sub-sampled results and stream the results to a user or
 shuffle data to minimize data access latency. This will essentially rely on the tuning knob: should
-we optimize data for access at time of ingest (eager), or should we do optimization at query or data access
-time to make subsequent executions of the query or data access extremely fast (lazy).
+we optimize data for access at time of ingest (eager), or should we do optimization at query or
+data access time to make subsequent executions of the query or data access extremely fast (lazy).
 
 ## Storage
 
@@ -192,3 +256,35 @@ time to make subsequent executions of the query or data access extremely fast (l
 - Direct Fabric: Fabric is the network connection to a smart drive, and "direct fabric" is an
   arbitrary term to refer to an architecture where a particular server that is attached to a set of
   smart drives is **not** an OSD.
+
+# Introduction (work in progress)
+
+Note: below is an attempt to relate the technical jargon to a description of the scientific use
+case.
+
+The human cell atlas is concerned with accumulating knowledge of the "cellular landscape" of the
+human body. In understanding the complexities of cells throughout the body and the variation of
+expression across cells of each organ system, the human cell atlas, and an atlas for each organ
+system, aims to accelerate medical science.
+
+The primary entities that we work with are biological cells (what is being sequenced), the genes
+for the sampled organism, and the expression of each gene in each cell. More colloquially, we are
+interested in the quantities (expression) of each protein (gene) in every cell of the human body.
+There are three abstractions in which our analysis operates: (1) the physical, (2) the space of all
+biological representations (transcriptome, genome, cell atlas), and (3) the effects of a human (or
+organ) having a specific subset of biological representations--or the co-occurrence of (1) and (2).
+
+The physical abstraction is represented by single-cell RNA sequencing and digitizing the physical
+cellular state of a biological sample.
+
+The transition to "the space of all biological representations" from sequencing is done by
+classifying cells into cell types and the expression across all genes of a cell into a cellular
+state. Essentially, the cellular landscape is an attempt to catalogue all existing cells into
+functional equivalence classes (what role in the organism does this cell play), and further
+separating those functional classes into correctness equivalence classes (is this cell working
+correctly, or is it malfunctioning).
+
+Finally, to make the theoretical problem tractable, we restrict the analysis of "all possible
+biological representations" to the specific biological existence that is found in a human. Or, in
+other words, once we have sequenced a sample we can map accumulated knowledge from the human cell
+atlas to a specific individual.
