@@ -102,7 +102,7 @@ to it is known as it's expression.
     Figure 2 (Figure 1 of https://doi.org/10.1038/ncomms14049): (a) Workflow of scRNA-seq using 10X
     Genomics' GemCode technology. (b) A cross-section of the workflow in (a) that shows how gel
     beads, biological cells, reagents, and oil are collected together into "Single-Cell GEMs" (GEM
-    is **g**el bead in **em**ulsion). (c) Distribution of gel beads per GEM which yields sufficient
+    is *g*el bead in *em*ulsion). (c) Distribution of gel beads per GEM which yields sufficient
     confidence that transcriptional profiles are on a single cell basis. (d) Biological entities
     that are contained in each gel bead. (e) Biological entities that are contained in the fully
     constructed library (final step before sequencing in (a)). (f) Workflow of 10X Genomics's
