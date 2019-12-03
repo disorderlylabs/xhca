@@ -132,7 +132,7 @@ associated with a cluster, or cell type, that cell can be "annotated" with that 
 Canonically, cells are compared by comparing the expression of all of their genes, but the exact
 similarity metric used is an implementation detail.
 
-[Figure 2](#erd-sketch), above, shows a rough sketch of an entity-relationship diagram for
+[Figure 3](#erd-sketch), above, shows a rough sketch of an entity-relationship diagram for
 representing the gene expression matrix, cell annotations, and gene annotations in a relational
 model. The key points here are:
 
